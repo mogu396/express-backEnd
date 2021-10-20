@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>新建分类</h1>
+    <h1>{{ id ? "编辑" : "新建" }}分类</h1>
     <el-form @submit.native.prevent="save">
       <el-form-item label="名称">
         <el-input v-model="model.name"></el-input>
@@ -14,6 +14,7 @@
 
 <script>
 export default {
+  props: ["id"],
   name: "CategoryEdit",
   data() {
     return {
@@ -22,11 +23,15 @@ export default {
   },
   methods: {
     async save() {
-      console.log(this);
-      console.log("save");
-      // 提交到categories接口
-      const res = await this.$http.post("categories", this.model);
-      // 创建完成跳转页面
+      let res;
+      if (this.id) {
+        // 修改
+        res = await this.$http.put(`categories/${this.id}`, this.model);
+      } else {
+        // 提交到categories接口
+        res = await this.$http.post("categories", this.model);
+      }
+      // 创建或修改完成跳转页面
       this.$router.push("/categories/list");
       // element-ui提示
       this.$message({
@@ -35,6 +40,15 @@ export default {
       });
       console.log(res);
     },
+    async fetch() {
+      console.log("执行");
+      const res = await this.$http.get(`categories/${this.id}`);
+      this.model = res.data;
+    },
+  },
+  created() {
+    // 如果有this.id再执行下面的代码
+    this.id && this.fetch();
   },
 };
 </script>
