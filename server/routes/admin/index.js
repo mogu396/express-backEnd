@@ -13,7 +13,7 @@ module.exports = app => {
 
     // 修改分类
     router.put('/categories/:id', async (req, res) => {
-        const model = await Category.findOneAndUpdate(req.params.id,req.body)
+        const model = await Category.findOneAndUpdate(req.params.id, req.body)
         // 发回给客户端，让它知道创建完成了
         res.send(model)
     })
@@ -23,6 +23,14 @@ module.exports = app => {
         const items = await Category.find().limit(10)
         // 发回给客户端，让它知道创建完成了
         res.send(items)
+    })
+
+    // 删除分类
+    router.delete('/categories/:id', async (req, res) => {
+        await Category.findOneAndDelete(req.params.id, req.body)
+        res.send({
+            success:true
+        })
     })
 
     // 获取详情数据的接口
