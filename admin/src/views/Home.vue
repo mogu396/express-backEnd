@@ -2,7 +2,7 @@
   <!-- vh：页面百分之一的宽度 -->
   <el-container>
     <el-header>
-      <div class="logo"></div>
+      <div class="title">通 用 后 台</div>
     </el-header>
     <el-container style="height: 100vh">
       <div class="my-aside">
@@ -51,5 +51,11 @@ export default {
   text-align: right;
   font-size: 12px;
   background-color: #242b2d;
+}
+
+.title{
+  color:white;
+  font-size: 16px;
+  float: left;
 }
 </style>

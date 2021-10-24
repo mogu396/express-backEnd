@@ -3,6 +3,7 @@
     <h1>分类列表</h1>
     <el-table :data="items">
       <el-table-column prop="_id" label="ID" width="300"></el-table-column>
+      <el-table-column prop="parent" label="上级分类"></el-table-column>
       <el-table-column prop="name" label="分类名称"></el-table-column>
       <el-table-column fixed="right" label="操作" width="180">
         <!-- 这里的scope是点击的那一行 -->
@@ -43,8 +44,9 @@ export default {
         type: "warning",
       }).then(async () => {
         // _id是因为数据库里面的是_id
+        console.log(row._id);
+        console.log(row.name);
         await this.$http.delete(`/categories/${row._id}`);
-        console.log(row);
         this.$message({
           type: "success",
           message: "删除成功!",

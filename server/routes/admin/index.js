@@ -13,30 +13,28 @@ module.exports = app => {
 
     // 修改分类
     router.put('/categories/:id', async (req, res) => {
-        const model = await Category.findOneAndUpdate(req.params.id, req.body)
-        // 发回给客户端，让它知道创建完成了
+        const model = await Category.findByIdAndUpdate (req.params.id, req.body)
         res.send(model)
     })
 
     // 获取分类
     router.get('/categories', async (req, res) => {
         const items = await Category.find().limit(10)
-        // 发回给客户端，让它知道创建完成了
         res.send(items)
     })
 
     // 删除分类
     router.delete('/categories/:id', async (req, res) => {
-        await Category.findOneAndDelete(req.params.id, req.body)
+        await Category.findByIdAndDelete(req.params.id, req.body)
         res.send({
-            success:true
+            success:true,
+            deleteObject:req.params.id
         })
     })
 
     // 获取详情数据的接口
     router.get('/categories/:id', async (req, res) => {
         const model = await Category.findById(req.params.id)
-        // 发回给客户端，让它知道创建完成了
         res.send(model)
     })
     app.use('/admin/api', router)
